@@ -11,8 +11,10 @@ from app_ui import Ui_MainWindow
 from Algo_genetique import genetic_algorithm
 
 class MainWindow(QMainWindow):
-    # create the main window
+    """Classe principale pour l'interface utilisateur de l'algorithme génétique TSP."""
+    
     def __init__(self):
+        """Initialise la fenêtre principale de l'application."""
         QWidget.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -21,6 +23,7 @@ class MainWindow(QMainWindow):
 
         
     def buttons_actions(self):
+        """Définit les actions associées aux boutons de l'interface."""
         # defining the buttons actions
         self.ui.pushButton_matrix.clicked.connect(
             self.generateMatrix
@@ -37,6 +40,7 @@ class MainWindow(QMainWindow):
 
 
     def generateMatrix(self):
+        """Génère une matrice vide avec des valeurs nulles sur la diagonale principale."""
         # generate an empty matrix with nulle values in the main diagonal
         number_of_line = int(self.ui.nbr_villes.text())
         
@@ -52,6 +56,7 @@ class MainWindow(QMainWindow):
 
 
     def generate_random_matrix(self):
+        """Génère une matrice symétrique avec des valeurs entières aléatoires."""
         # generate a symtrical matrix with random int values 
         number_of_line = int(self.ui.nbr_villes.text())
 
@@ -69,6 +74,8 @@ class MainWindow(QMainWindow):
 
 
     def auto_complete(self):
+        """Remplit l'autre moitié de la matrice avec les entrées utilisateur 
+        pour créer une matrice symétrique."""
         # fills the other half of the matrix with user inputs,
         # to create a symetrical matrix 
         count_row = self.ui.tableWidget.columnCount()
@@ -88,6 +95,11 @@ class MainWindow(QMainWindow):
 
 
     def getMatrixContent(self):
+        """Récupère les valeurs de la matrice et exécute l'algorithme génétique.
+        
+        Extrait les données de la matrice de distances, les paramètres de l'algorithme,
+        exécute l'algorithme génétique et affiche les résultats avec le temps d'exécution.
+        """
         # retrieve the matrix values, and store them in a numpy array
         count_row = self.ui.tableWidget.columnCount()
         mat_distance = []

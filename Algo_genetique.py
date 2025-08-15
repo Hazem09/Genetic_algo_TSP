@@ -7,6 +7,13 @@ class Population():
     le score de chaque individu, les parents sélectionnés pour le crossover,
     l'individu avec le meilleur score et la matrice des distances.'''
     def __init__(self,villes, mat_distance,nbr_population):
+        """Initialise une nouvelle population pour l'algorithme génétique.
+        
+        Args:
+            villes: Liste ou plage des villes à visiter
+            mat_distance: Matrice des distances entre les villes
+            nbr_population: Nombre d'individus dans la population
+        """
         # initialiser la première population de façon aléatoire  
         self.sac = np.asarray([np.random.permutation(villes) for _ in range(nbr_population)])
         self.parents = [] # une liste vide pour stocker les parents
@@ -16,7 +23,7 @@ class Population():
 
 
     def fitness(self, chromosome):
-        ''''Cette fonction calcule le score des individus.'''
+        """Cette fonction calcule le score des individus."""
         return sum(
             [
                 self.mat_distance[chromosome[i], chromosome[i + 1]]
@@ -51,8 +58,8 @@ class Population():
                 self.parents.append(self.sac[indice])
         self.parents = np.asarray(self.parents) #nous convertissons la liste des parents en tableau de numpy
     def crossover(self, p_cross):
-        ''''Cette fonction effectue le crossover où elle sélectionne
-        deux parents et en fonction de la probabilité.'''
+        """Cette fonction effectue le crossover où elle sélectionne
+        deux parents et en fonction de la probabilité."""
         enfants = []
         count, taille = self.parents.shape #On stocke la dimension du tableau des parents 
         for _ in range(len(self.sac)):
@@ -122,6 +129,20 @@ def genetic_algorithm(
     p_cross=0.7, # La probability de croisement
     p_mut=0.1, # la probability de mutation.
 ):
+    """Exécute l'algorithme génétique pour résoudre le problème du voyageur de commerce.
+    
+    Args:
+        villes: La liste ou plage des villes à visiter
+        mat_distance: La matrice des distances entre les villes 
+        nbr_population: Le nombre d'individus dans la population
+        nbr_iteration: Le nombre d'itérations (générations) à exécuter
+        selectivity: Pourcentage de la population à sélectionner comme parents (par défaut 0.2)
+        p_cross: Probabilité de croisement (par défaut 0.7)
+        p_mut: Probabilité de mutation (par défaut 0.1)
+    
+    Returns:
+        tuple: (score, meilleur) - Le meilleur score trouvé et la meilleure solution
+    """
     pop = Population(villes, mat_distance, nbr_population) # Initialisation de la population.
     meilleur = pop.meilleur # Le variable où on stocke le meilleur individu. 
     score = float("inf") # On initialise la variable score avec une valeur infinie.
